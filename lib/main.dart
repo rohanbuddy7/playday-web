@@ -85,77 +85,100 @@ class _MyApp extends State<MyApp> {
                     Container(
                       height: 4,
                     ),
-                    buildPage(0),
+                    buildPage(0, isMobileView),
                     Container(
                       height: 4,
                     ),
-                    buildPage(1),
+                    buildPage(1, isMobileView),
                     Container(
                       height: 4,
                     ),
-                    buildPage(2),
+                    buildPage(2, isMobileView),
                     Container(
                       height: 4,
                     ),
+                    Visibility(
+                      visible: isMobileView ? true : false,
+                        child: Container(
+                          padding: EdgeInsets.all(0.0),
+                          child: Column(
+                            children: [
+                              contacts(),
+                              Padding(padding: EdgeInsets.all(10),
+                              child: copyright(),)
+                            ],
+                          ),
+                        )
+                    )
+                  ],
+                ),),
+            )),
+            Visibility(
+              visible: isMobileView ? false : true,
+              child: Container(
+                color: Color(0xFFFFFFFF),
+                padding: EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    contacts(),
+                    copyright()
                   ],
                 ),
-              ),
-            )),
-            Container(
-              color: Color(0xFFFFFFFF),
-              padding: EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          launchPrivacy();
-                        },
-                        child: Text(
-                          'Privacy',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          launchEmail();
-                        },
-                        child: Text(
-                          'Help & Support',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          launchEmail();
-                        },
-                        child: Text(
-                          'Contact',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    '© 2024 Tribe7 Prod',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  contacts(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextButton(
+          onPressed: () {
+            launchPrivacy();
+          },
+          child: Text(
+            'Privacy',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            launchEmail();
+          },
+          child: Text(
+            'Help & Support',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            launchEmail();
+          },
+          child: Text(
+            'Contact',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  copyright(){
+    return const Text(
+      '© 2024 Tribe7 Prod',
+      style: TextStyle(
+        color: Colors.black,
       ),
     );
   }
@@ -225,21 +248,23 @@ class _MyApp extends State<MyApp> {
                     'assets/images/ic_download_ios.jpg',
                     fit: BoxFit.fitWidth,  width: isMobileView ? 150 : 200
                 ),
-                onTap: () {},
+                onTap: () {
+                  launchiOS();
+                },
               )
             ],
           ),
         ));
   }
 
-  Widget buildPage(int pageIndex) {
-    var img = "assets/images/img_1.png";
+  Widget buildPage(int pageIndex, bool isMobileView) {
+    var img = isMobileView ? "assets/images/img_1_mob.png" : "assets/images/img_1.png";
     if (pageIndex == 0) {
-      img = "assets/images/img_1.png";
+      img = isMobileView ? "assets/images/img_1_mob.png" : "assets/images/img_1.png";
     } else if (pageIndex == 1) {
-      img = "assets/images/img_2.png";
+      img = isMobileView ? "assets/images/img_2_mob.png" : "assets/images/img_2.png";
     } else if (pageIndex == 2) {
-      img = "assets/images/img_3.png";
+      img = isMobileView ? "assets/images/img_3_mob.png" : "assets/images/img_3.png";
     }
     return Container(
       padding: EdgeInsets.all(20),
@@ -267,7 +292,7 @@ class _MyApp extends State<MyApp> {
   }
 
   void launchiOS() async {
-    const url = "";
+    const url = "https://apps.apple.com/app/id6499083992";
     if (await canLaunch(url)) {
       await launch(url);
     } else {
