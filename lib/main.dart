@@ -1,8 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'mixpanel/mixpanel_import_controller.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +19,6 @@ class MyApp extends StatefulWidget {
 class _MyApp extends State<MyApp> {
   PageController? _pageController = null;
   int _currentPage = 0;
-  int _totalPages = 5;
 
   @override
   void initState() {
@@ -150,6 +152,7 @@ class _MyApp extends State<MyApp> {
         ),
         TextButton(
           onPressed: () {
+            MixpanelController.trackHelpClick();
             launchEmail();
           },
           child: Text(
@@ -161,6 +164,7 @@ class _MyApp extends State<MyApp> {
         ),
         TextButton(
           onPressed: () {
+            MixpanelController.trackContactClick();
             launchEmail();
           },
           child: Text(
@@ -282,6 +286,7 @@ class _MyApp extends State<MyApp> {
   }
 
   void launchAndroid() async {
+    MixpanelController.trackAndroidClick();
     const url =
         "https://play.google.com/store/apps/details?id=com.rohans.playday&hl=en";
     if (await canLaunch(url)) {
@@ -292,6 +297,7 @@ class _MyApp extends State<MyApp> {
   }
 
   void launchiOS() async {
+    MixpanelController.trackIosClick();
     const url = "https://apps.apple.com/app/id6499083992";
     if (await canLaunch(url)) {
       await launch(url);
@@ -301,6 +307,7 @@ class _MyApp extends State<MyApp> {
   }
 
   void launchPrivacy() async {
+    MixpanelController.trackPrivacyClick();
     const url = "https://sites.google.com/view/playdate-privacy-policy/home";
     if (await canLaunch(url)) {
       await launch(url);
@@ -321,4 +328,6 @@ class _MyApp extends State<MyApp> {
       throw 'Could not launch $emailUri';
     }
   }
+
+
 }

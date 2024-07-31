@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   cached_network_image: ^3.3.0
   url_launcher: ^6.3.0
+  mixpanel_flutter: ^2.1.1
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:
